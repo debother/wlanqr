@@ -1,0 +1,524 @@
+/* ---------------------------------------------------------------------------
+   WLANQR
+   Screen: a pale, cool "utility panel" — network vernacular in monospace,
+   one teal accent, ruled dividers instead of boxes and shadows.
+   Print: only the card survives; everything is DOM text plus vector SVG.
+   All type comes from system stacks, so the page loads no font files.
+--------------------------------------------------------------------------- */
+
+:root {
+  --ink: #14201c;
+  --ink-soft: #55655e;
+  --paper: #eef1ec;
+  --sheet: #ffffff;
+  --rule: #cfd6cf;
+  --accent: #0e6e5b;
+  --accent-ink: #ffffff;
+  --alert: #8a4b12;
+
+  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono',
+    'DejaVu Sans Mono', Menlo, Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.page {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+/* --- masthead ------------------------------------------------------------ */
+
+.masthead {
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1.25rem;
+}
+
+.masthead__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.masthead__mark {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.28em;
+  color: var(--accent);
+}
+
+.masthead__title {
+  margin: 0;
+  max-width: 30ch;
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.language-switch {
+  display: inline-flex;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 2px;
+}
+
+.language-switch__button {
+  border: 0;
+  padding: 0.25rem 0.45rem;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.language-switch__button[aria-pressed='true'] {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* --- layout -------------------------------------------------------------- */
+
+.layout {
+  display: grid;
+  gap: 2.5rem;
+  padding-top: 2rem;
+}
+
+@media (min-width: 56rem) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 3rem;
+    align-items: start;
+  }
+}
+
+.panel__heading {
+  margin: 0 0 1.25rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* --- form ---------------------------------------------------------------- */
+
+.field {
+  margin-bottom: 1.75rem;
+}
+
+.field--group {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin-inline: 0;
+  padding: 1.25rem 0;
+}
+
+.field__label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  padding: 0;
+}
+
+.field__row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.field__input {
+  width: 100%;
+  min-width: 0;
+  padding: 0.7rem 0.75rem;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: var(--sheet);
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.field__input--mono {
+  font-family: var(--mono);
+}
+
+.field__hint {
+  margin: 0.45rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.field__notice {
+  margin: 0.55rem 0 0;
+  border-left: 3px solid var(--accent);
+  padding-left: 0.65rem;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.choice,
+.toggle {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  padding: 0.4rem 0;
+  cursor: pointer;
+}
+
+.toggle {
+  border-top: 1px solid var(--rule);
+  padding: 1rem 0;
+}
+
+.choice input,
+.toggle input {
+  margin-top: 0.2rem;
+  accent-color: var(--accent);
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+}
+
+.choice__label {
+  display: block;
+  font-size: 0.9375rem;
+}
+
+.choice__hint {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.toggle input:disabled + span {
+  opacity: 0.5;
+}
+
+/* --- buttons ------------------------------------------------------------- */
+
+.button {
+  font: inherit;
+  border-radius: 2px;
+  border: 1px solid var(--ink);
+  padding: 0.7rem 1.1rem;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.button--quiet {
+  flex: none;
+  border-color: var(--rule);
+  font-family: var(--mono);
+  font-size: 0.875rem;
+}
+
+.button--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.button--primary:hover {
+  background: #0b5b4b;
+}
+
+.button--secondary {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.button--secondary:hover {
+  background: #dfeae5;
+}
+
+/* --- output -------------------------------------------------------------- */
+
+.placeholder {
+  border: 1px dashed var(--rule);
+  border-radius: 2px;
+  padding: 2rem 1.25rem;
+  text-align: center;
+}
+
+.placeholder__label {
+  margin: 0 0 0.35rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--alert);
+}
+
+.placeholder__body {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+/* The on-screen preview keeps A5 proportions (148 x 210) so what you see is
+   what the sheet looks like. */
+.sheet {
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  aspect-ratio: 148 / 210;
+  display: flex;
+  padding: 7%;
+}
+
+.actions {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  align-items: center;
+}
+
+.actions__hint {
+  margin: 0;
+  flex: 1 1 100%;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.status {
+  margin: 1.25rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.status__tag {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-right: 0.4rem;
+}
+
+/* --- footer -------------------------------------------------------------- */
+
+.footer {
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+
+.footer__privacy {
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+
+.footer__fineprint {
+  margin: 0;
+  max-width: 60ch;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+/* --- the card ------------------------------------------------------------ */
+
+.card {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #171a18;
+  background: #ffffff;
+}
+
+.card__eyebrow {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #0e6e5b;
+}
+
+.card__details {
+  width: 100%;
+  min-width: 0;
+  margin-top: 1.15rem;
+}
+
+.card__ssid-label {
+  margin: 0;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.card__ssid {
+  margin: 0.15rem 0 0;
+  font-family: var(--mono);
+  font-size: clamp(1rem, 3.2vw, 1.5rem);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  line-height: 1.2;
+}
+
+.card__qr {
+  display: block;
+  flex: none;
+  aspect-ratio: 1;
+  width: 72%;
+  max-width: 20rem;
+  height: auto;
+  margin: 7% 0 3%;
+}
+
+.card__instruction {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #464d49;
+}
+
+.card__password {
+  margin: 0.75rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.card__password-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.card__password-value {
+  display: block;
+  max-width: 100%;
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.card__note {
+  margin: 0.75rem 0 0;
+  font-size: 0.75rem;
+  max-width: 34ch;
+  color: #5a625e;
+}
+
+.card__colophon {
+  margin: auto 0 0;
+  padding-top: 1.25rem;
+  font-family: var(--mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.1em;
+  color: #7a817d;
+}
+
+/* --- print --------------------------------------------------------------- */
+
+@page {
+  margin: 12mm;
+}
+
+@media print {
+  html,
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  /* Remove screen-only UI from layout so it cannot create blank print pages. */
+  .masthead,
+  .panel:not(.panel--output),
+  .panel--output > :not(.sheet),
+  .footer {
+    display: none;
+  }
+
+  .page,
+  .layout,
+  .panel--output,
+  .sheet {
+    display: block;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: #ffffff;
+    max-width: none;
+    aspect-ratio: auto;
+  }
+
+  .card {
+    width: 120mm;
+    min-height: 170mm;
+    margin: 0 auto;
+    border: 0.3mm solid #d5d8d5;
+    padding: 10mm;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .card__eyebrow {
+    margin: 0;
+  }
+
+  /* Integer SVG geometry stays crisp; physical size is bounded for ordinary
+     browser print flows without assuming a particular sheet size. */
+  .card__qr {
+    width: 74mm;
+    max-width: 74mm;
+    margin: 8mm 0 3mm;
+  }
+
+  .card__ssid {
+    font-size: 16pt;
+  }
+
+  .card__instruction {
+    font-size: 11pt;
+  }
+
+  .card__details {
+    margin-top: 7mm;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

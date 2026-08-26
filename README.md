@@ -2,25 +2,47 @@
 
 Create a Wi-Fi QR card in seconds.
 
-WLANQR is a small English/German browser utility for creating a printable guest
-Wi-Fi card and downloading its QR code as a PNG.
+A tiny local-first utility for creating a printable guest Wi-Fi card without
+uploading or storing your credentials.
 
-## Core properties
+**A Debother utility — small software for annoying problems.**
 
-- Credentials are processed locally in the browser.
-- No account, credential uploads, analytics, or browser storage.
-- English and German interface.
-- One printable guest Wi-Fi card.
-- Optional plaintext password display, off by default.
-- Raw 1024 × 1024 QR PNG download.
-- Pasted whitespace is preserved exactly; the UI warns when pasted passwords
-  contain whitespace so users can verify the source value.
+![WLANQR showing a generated guest Wi-Fi card](docs/wlanqr-preview.png)
 
-WLANQR does not trim or normalize the SSID or password. It produces the common
-`WIFI:` QR payload for WPA/WPA3-Personal, open, and legacy WEP networks. It does
-not support enterprise Wi-Fi or captive-portal authentication.
+## What it does
 
-## Local development
+Enter a network name, choose its security type, and add the password when
+needed. WLANQR builds a scannable Wi-Fi QR code, a clean guest card for printing,
+and a raw 1024 × 1024 PNG. The interface is available in English and German.
+
+The optional plaintext password on the card is off by default. Pasted whitespace
+is preserved exactly, with a small notice prompting you to verify it.
+
+## Why WLANQR?
+
+- **Private by design:** credentials stay in the browser.
+- **Scan and connect:** create a familiar Wi-Fi QR code in seconds.
+- **Ready to print:** produce one focused guest card using the browser's print
+  dialog.
+- **English & German:** switch languages directly in the interface.
+
+## How it works
+
+1. Enter the Wi-Fi details.
+2. Scan the QR code or print the guest card.
+3. Done.
+
+## Privacy
+
+Credentials are processed locally in the browser. They are not uploaded, stored
+in browser storage, or sent to analytics. Closing the tab discards the entered
+values.
+
+WLANQR does not trim or normalize the SSID or password. It supports the common
+`WIFI:` QR payload for WPA/WPA3-Personal, open, and legacy WEP networks;
+enterprise Wi-Fi and captive-portal authentication are outside its scope.
+
+## Development
 
 Requirements: a current Node.js release and npm.
 
@@ -41,18 +63,25 @@ npm audit
 
 The production build is written to `dist/`.
 
-## Validation status
+## Validation
 
-The feature-frozen V1 software baseline passes 63 automated tests, strict
-TypeScript checking, lint, production build, dependency audit, bundle privacy
-checks, and independent QR encode/decode tests. Browser rendering has been
-reviewed in English and German at 320, 375, 768, and 1280 px.
+The feature-frozen V1 software baseline passes 63 automated tests, TypeScript,
+lint, production build, dependency audit, bundle privacy checks, and independent
+QR encode/decode tests.
 
-Physical acceptance is still pending: scanning with real iPhone and Android
-devices, browser print-preview review, printing a physical card, and first-time
-human completion testing. A generated QR code confirms payload construction, not
-that the entered credentials are correct or that a particular device will join.
+Hardware acceptance is still pending:
 
----
+- iPhone scan
+- Android scan
+- Browser print preview
+- Physical print
+- First-time human completion test
 
-A Debother utility — small software for annoying problems.
+A generated QR code confirms payload construction, not that the entered
+credentials are correct or that a particular device will join.
+
+## Debother
+
+WLANQR is a [Debother utility](https://debother.com).
+
+Small software for annoying problems.

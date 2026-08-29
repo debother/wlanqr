@@ -348,6 +348,10 @@ export default function App() {
               {link.label}
             </a>
           ))}
+          <a href="https://github.com/debother/wlanqr">{t('githubLink')}</a>
+          <a className="footer__madeby" href="https://debother.com/">
+            {t('madeByDebother')}
+          </a>
         </nav>
       </footer>
     </div>

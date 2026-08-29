@@ -3,8 +3,22 @@
    Screen: a pale, cool "utility panel" — network vernacular in monospace,
    one teal accent, ruled dividers instead of boxes and shadows.
    Print: only the card survives; everything is DOM text plus vector SVG.
-   All type comes from system stacks, so the page loads no font files.
+   Type is self-hosted Geist, shared with the rest of the Debother family.
 --------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: "Geist";
+  src: url("/assets/fonts/Geist-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/fonts/GeistMono-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
 
 :root {
   --ink: #14201c;
@@ -16,9 +30,9 @@
   --accent-ink: #ffffff;
   --alert: #8a4b12;
 
-  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+  --sans: 'Geist', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
     sans-serif;
-  --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono',
+  --mono: 'Geist Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono',
     'DejaVu Sans Mono', Menlo, Consolas, monospace;
 }
 
@@ -350,9 +364,15 @@ body {
 
 .footer__links {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
   margin-top: 0.75rem;
   font-size: 0.8125rem;
+}
+
+/* Parent-brand backlink: present and reachable, deliberately not a CTA. */
+.footer__madeby {
+  opacity: 0.75;
 }
 
 .footer__links a {

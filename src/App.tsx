@@ -12,6 +12,7 @@ import { downloadQrPng } from './downloadQrPng';
 import {
   detectLanguage,
   formatTranslation,
+  getLegalLinks,
   translate,
   type Language,
   type TranslationKey,
@@ -86,6 +87,7 @@ export default function App() {
   }, [language]);
 
   const t = (key: TranslationKey) => translate(language, key);
+  const legalLinks = getLegalLinks(language);
   const option =
     SECURITY_OPTIONS.find((entry) => entry.id === optionId) ??
     SECURITY_OPTIONS[0];
@@ -340,6 +342,13 @@ export default function App() {
       <footer className="footer">
         <p className="footer__privacy">{t('privacyLead')}</p>
         <p className="footer__fineprint">{t('privacyDetail')}</p>
+        <nav className="footer__links" aria-label={t('legalNavigationLabel')}>
+          {legalLinks.map((link) => (
+            <a href={link.href} key={link.href}>
+              {link.label}
+            </a>
+          ))}
+        </nav>
       </footer>
     </div>
   );

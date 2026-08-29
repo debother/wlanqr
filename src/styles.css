@@ -348,6 +348,22 @@ body {
   color: var(--ink-soft);
 }
 
+.footer__links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+}
+
+.footer__links a {
+  color: var(--ink-soft);
+  text-underline-offset: 0.15em;
+}
+
+.footer__links a:hover {
+  color: var(--ink);
+}
+
 /* --- the card ------------------------------------------------------------ */
 
 .card {

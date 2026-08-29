@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { buildWifiPayload, type WifiCredentials } from './core/wifiPayload';
-import { detectLanguage, translate, type Language } from './i18n';
+import {
+  detectLanguage,
+  getLegalLinks,
+  translate,
+  type Language,
+} from './i18n';
 
 describe('language selection', () => {
   it('uses English as the default and fallback', () => {
@@ -45,5 +50,16 @@ describe('language selection', () => {
       hidden: false,
     });
     expect(buildWifiPayload(credentials)).toBe(before);
+  });
+
+  it('uses the matching central Debother legal pages for each language', () => {
+    expect(getLegalLinks('en')).toEqual([
+      { label: 'Privacy', href: 'https://debother.com/privacy/' },
+      { label: 'Imprint', href: 'https://debother.com/imprint/' },
+    ]);
+    expect(getLegalLinks('de')).toEqual([
+      { label: 'Datenschutz', href: 'https://debother.com/datenschutz/' },
+      { label: 'Impressum', href: 'https://debother.com/impressum/' },
+    ]);
   });
 });

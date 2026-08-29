@@ -9,6 +9,8 @@ uploading or storing your credentials.
 
 ![WLANQR showing a generated guest Wi-Fi card](docs/wlanqr-preview.png)
 
+The preview uses synthetic example credentials only.
+
 ## What it does
 
 Enter a network name, choose its security type, and add the password when
@@ -63,9 +65,17 @@ npm audit
 
 The production build is written to `dist/`.
 
+## Deployment
+
+Railway builds the production assets in a pinned Node image and serves only
+`dist/` from a pinned Caddy image. Set the non-secret `SITE_MODE` environment
+value to exactly `production` for an indexable production deployment. Any
+missing or different value defaults safely to staging behavior with
+`X-Robots-Tag: noindex, nofollow` and `Cache-Control: no-store`.
+
 ## Validation
 
-The feature-frozen V1 software baseline passes 63 automated tests, TypeScript,
+The feature-frozen V1 software baseline passes 64 automated tests, TypeScript,
 lint, production build, dependency audit, bundle privacy checks, and independent
 QR encode/decode tests.
 

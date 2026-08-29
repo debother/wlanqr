@@ -47,6 +47,9 @@ const en = {
     'Your Wi-Fi credentials are processed locally in this browser tab.',
   privacyDetail:
     'The page itself must load normally, but credentials are not uploaded, analyzed, or stored. No account, analytics, cookies, or saved history.',
+  legalNavigationLabel: 'Legal',
+  privacyLinkLabel: 'Privacy',
+  imprintLinkLabel: 'Imprint',
   cardAriaLabel: 'Printable guest Wi-Fi card',
   cardEyebrow: 'Guest Wi-Fi',
   cardInstruction: 'Scan to connect',
@@ -110,6 +113,9 @@ const de: Translation = {
     'Deine WLAN-Zugangsdaten werden lokal in diesem Browser-Tab verarbeitet.',
   privacyDetail:
     'Die Seite selbst wird normal geladen, Zugangsdaten werden aber weder hochgeladen noch analysiert oder gespeichert. Kein Konto, keine Analyse, keine Cookies, kein Verlauf.',
+  legalNavigationLabel: 'Rechtliches',
+  privacyLinkLabel: 'Datenschutz',
+  imprintLinkLabel: 'Impressum',
   cardAriaLabel: 'Druckbare Gäste-WLAN-Karte',
   cardEyebrow: 'Gäste-WLAN',
   cardInstruction: 'Zum Verbinden scannen',
@@ -140,4 +146,30 @@ export function formatTranslation(
     result = result.split(`{${name}}`).join(value);
   }
   return result;
+}
+
+export function getLegalLinks(language: Language) {
+  if (language === 'de') {
+    return [
+      {
+        label: translate(language, 'privacyLinkLabel'),
+        href: 'https://debother.com/datenschutz/',
+      },
+      {
+        label: translate(language, 'imprintLinkLabel'),
+        href: 'https://debother.com/impressum/',
+      },
+    ] as const;
+  }
+
+  return [
+    {
+      label: translate(language, 'privacyLinkLabel'),
+      href: 'https://debother.com/privacy/',
+    },
+    {
+      label: translate(language, 'imprintLinkLabel'),
+      href: 'https://debother.com/imprint/',
+    },
+  ] as const;
 }

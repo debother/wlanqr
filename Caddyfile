@@ -1,0 +1,33 @@
+{
+	admin off
+	auto_https off
+	persist_config off
+}
+
+:{$PORT:8080} {
+	root * /srv
+
+	route {
+		header {
+			Cache-Control "public, max-age=0, must-revalidate"
+			Content-Security-Policy "default-src 'none'; base-uri 'none'; connect-src 'none'; font-src 'none'; form-action 'none'; frame-ancestors 'none'; frame-src 'none'; img-src 'self'; manifest-src 'none'; media-src 'none'; object-src 'none'; script-src 'self'; style-src 'self'; worker-src 'none'"
+			Permissions-Policy "accelerometer=(), autoplay=(), camera=(), clipboard-read=(), clipboard-write=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+			Referrer-Policy "no-referrer"
+			Strict-Transport-Security "max-age=86400"
+			X-Content-Type-Options "nosniff"
+			X-Frame-Options "DENY"
+		}
+		header -Server
+
+		@staging expression `"{$SITE_MODE:staging}" != "production"`
+		header @staging {
+			Cache-Control "no-store"
+			X-Robots-Tag "noindex, nofollow"
+		}
+
+		respond /healthz "ok" 200
+
+		encode zstd gzip
+		file_server
+	}
+}

@@ -95,3 +95,7 @@ credentials are correct or that a particular device will join.
 WLANQR is a [Debother utility](https://debother.com).
 
 Small software for annoying problems.
+
+## License
+
+MIT License © 2026 Florian Hoffarth
